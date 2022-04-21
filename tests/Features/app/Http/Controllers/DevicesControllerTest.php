@@ -1,21 +1,28 @@
 <?php
+
 namespace Featutes\app\Http\Controllers;
 
 use tests\TestCase;
 use App\Models\Device;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 
 class DevicesControllerTest extends TestCase
 {
     use DatabaseMigrations;
+
     /**
-     * checa se é possivel criar um dispositivo
+     * checa se é possivel efetuar login
      */
-    public function testCreateDevice()
+    public function testLogin()
     {
-        $device = Device::factory()->create();
-        $response = $this->post('/device/create', $device->toArray());
-        $response->assertResponseStatus(201);
+        $user = [
+            'email' => 'test@test.com',
+            'password' => '123456'
+        ];
+
+        $response = $this->post('/api/login', $user);
+        $response->assertResponseStatus(200);
     }
 
     /**
@@ -38,6 +45,16 @@ class DevicesControllerTest extends TestCase
     }
 
     /**
+     * checa se é possivel criar um dispositivo
+     */
+    public function testCreateDevice()
+    {
+        $device = Device::factory()->create();
+        $response = $this->post('/device/create', $device->toArray());
+        $response->assertResponseStatus(201);
+    }
+
+    /**
      * checa se é possivel deletar um dispositivo
      */
     public function testDeleteDevice()
@@ -46,5 +63,4 @@ class DevicesControllerTest extends TestCase
         $response = $this->delete('/device/' . $device->id);
         $response->assertResponseStatus(200);
     }
-
 }

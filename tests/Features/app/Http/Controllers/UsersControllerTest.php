@@ -34,8 +34,6 @@ class UsersControllerTest extends TestCase
     public function testCreateUser()
     {
         $user = User::factory()->create();
-
-        dd($user);
         $response = $this->post('/user/create', $user->toArray());
         $response->assertResponseStatus(201);
     }

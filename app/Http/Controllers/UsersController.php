@@ -1,11 +1,12 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Str;
 
 class UsersController extends Controller
 {
@@ -16,6 +17,29 @@ class UsersController extends Controller
      */
     public function __construct()
     {
+    }
+
+    /**
+     * Autenticação de usuário
+     * 
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function authenticate(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required',
+            'password' => 'required'
+        ]);
+        $user = User::where('email', $request->input('email'))->first();
+        if (Hash::check($request->input('password'), $user->password)) {
+            $random = Str::random(40);
+            $apikey = base64_encode($random);
+            User::where('email', $request->input('email'))->update(['api_key' => "$apikey"]);;
+            return response()->json(['status' => 'success', 'api_key' => $apikey]);
+        } else {
+            return response()->json(['status' => 'fail'], 401);
+        }
     }
 
     /**
@@ -53,6 +77,7 @@ class UsersController extends Controller
             'password' => 'required',
             'url' => 'required'
         ]);
+        $request['password'] = Hash::make($request->input('password'));
         $user = User::create($request->all());
 
         return response()->json($user, 201);

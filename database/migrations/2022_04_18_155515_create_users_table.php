@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('url');
+            $table->string('api_key')->nullable();
             $table->string('updated_at')->timestamps();
             $table->string('created_at')->timestamps();
         });

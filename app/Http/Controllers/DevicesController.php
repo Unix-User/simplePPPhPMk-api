@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Device;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DevicesController extends Controller
 {
@@ -13,7 +14,7 @@ class DevicesController extends Controller
      */
     public function __construct()
     {
-        //
+        $this->middleware('auth');
     }
     
     /**
@@ -21,9 +22,10 @@ class DevicesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getAllDevices()
+    public function getAllDevices(Request $request)
     {
-        return response()->json(Device::all());
+        $devices = Auth::user()->devices;
+        return response()->json(['status' => 'success','result' => $devices]);
     }
 
     /**
