@@ -27,7 +27,7 @@ class DeviceFactory extends Factory
             'owner' => $this->faker->word,
             'ikev2' => $this->faker->boolean,
             'user' => $this->faker->word,
-            'password' => $this->faker->word,
+            'password' => $this->faker->word
         ];
     }
 }

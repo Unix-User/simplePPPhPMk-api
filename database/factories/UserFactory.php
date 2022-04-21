@@ -1,5 +1,4 @@
 <?php
-
 namespace Database\Factories;
 
 use App\Models\User;
@@ -22,8 +21,10 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
+            'name' => $this->faker->word,
             'email' => $this->faker->unique()->safeEmail,
+            'password' => $this->faker->password,
+            'url' => $this->faker->url
         ];
     }
 }

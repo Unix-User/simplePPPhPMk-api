@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Auth\Authenticatable;
@@ -13,21 +12,22 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 {
     use Authenticatable, Authorizable, HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var string[]
-     */
+    protected $table = 'users';
+
     protected $fillable = [
-        'name', 'email',
+        'name',
+        'email',
+        'password',
+        'url'
     ];
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var string[]
-     */
     protected $hidden = [
         'password',
     ];
+    
+    public function devices()
+    {
+        return $this->hasMany(Device::class);
+    }
+
 }

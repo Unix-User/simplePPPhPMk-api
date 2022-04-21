@@ -22,3 +22,9 @@ $router->get('/device/{id}', 'DevicesController@getDevice');
 $router->post('/device/create', 'DevicesController@createDevice');
 $router->put('/device/{id}/update', 'DevicesController@updateDevice');
 $router->delete('/device/{id}', 'DevicesController@deleteDevice');
+
+$router->get('/users', 'UsersController@getAllUsers');
+$router->get('/user/{id}', 'UsersController@getUser');
+$router->post('/user/create', 'UsersController@createUser');
+$router->put('/user/{id}/update', 'UsersController@updateUser');
+$router->delete('/user/{id}', 'UsersController@deleteUser');
