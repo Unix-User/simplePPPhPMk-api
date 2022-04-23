@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Device;
@@ -16,7 +17,7 @@ class DevicesController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Retorna todos os dispositivos
      *
@@ -25,7 +26,7 @@ class DevicesController extends Controller
     public function getAllDevices(Request $request)
     {
         $devices = Auth::user()->devices;
-        return response()->json(['status' => 'success','result' => $devices]);
+        return response()->json(['result' => $devices]);
     }
 
     /**
@@ -50,16 +51,17 @@ class DevicesController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'ip' => 'required',
-            'owner' => 'required',
+            'user_id' => 'required',
             'ikev2' => 'required',
             'user' => 'required',
             'password' => 'required',
         ]);
-        $device = Device::create($request->all());
-
-        return response()->json($device, 201);
+        if (Auth::user()) {
+            $device = Device::create($request->all());
+            return response()->json($device, 201);
+        }
     }
-    
+
     /**
      * Atualiza um dispositivo
      *
@@ -71,7 +73,6 @@ class DevicesController extends Controller
     {
         $device = Device::findOrFail($id);
         $device->update($request->all());
-
         return response()->json($device, 200);
     }
 
@@ -84,8 +85,6 @@ class DevicesController extends Controller
     public function deleteDevice($id)
     {
         Device::findOrFail($id)->delete();
-
         return response('Deleted Successfully', 200);
     }
-
 }

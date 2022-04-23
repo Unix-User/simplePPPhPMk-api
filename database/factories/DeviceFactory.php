@@ -24,7 +24,7 @@ class DeviceFactory extends Factory
         return [
             'name' => $this->faker->word,
             'ip' => $this->faker->ipv4(),
-            'owner' => $this->faker->word,
+            'user_id' => $this->faker->digits(1),
             'ikev2' => $this->faker->boolean,
             'user' => $this->faker->word,
             'password' => $this->faker->word

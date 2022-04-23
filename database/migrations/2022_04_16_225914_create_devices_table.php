@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->ipAddress('ip');
-            $table->string('owner');
+            $table->string('user_id');
             $table->boolean('ikev2');
             $table->string('user');
             $table->string('password');

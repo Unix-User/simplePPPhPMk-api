@@ -17,7 +17,6 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-
 $router->group(['prefix' => 'api/'], function ($router) {
     $router->get('login/', 'UsersController@authenticate');
     $router->get('devices', 'DevicesController@getAllDevices');

@@ -35,7 +35,7 @@ class UsersController extends Controller
         if (Hash::check($request->input('password'), $user->password)) {
             $random = Str::random(40);
             $apikey = base64_encode($random);
-            User::where('email', $request->input('email'))->update(['api_key' => "$apikey"]);;
+            User::where('email', $request->input('email'))->update(['api_key' => "$apikey"]);
             return response()->json(['status' => 'success', 'api_key' => $apikey]);
         } else {
             return response()->json(['status' => 'fail'], 401);

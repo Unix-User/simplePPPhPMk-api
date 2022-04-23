@@ -17,7 +17,7 @@ class Device extends Model
 
         'name',
         'ip',
-        'owner',
+        'user_id',
         'ikev2',
         'user',
         'password',
