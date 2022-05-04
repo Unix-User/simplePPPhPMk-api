@@ -13,14 +13,11 @@ class DevicesControllerTest extends TestCase
 
     /**
      * checa se é possivel efetuar login
+     * na api de autenticação do sistema
      */
     public function testLogin()
     {
-        $user = [
-            'email' => 'test@test.com',
-            'password' => '123456'
-        ];
-
+        $user = Auth::factory()->create();
         $response = $this->post('/api/login', $user);
         $response->assertResponseStatus(200);
     }
@@ -63,4 +60,5 @@ class DevicesControllerTest extends TestCase
         $response = $this->delete('/device/' . $device->id);
         $response->assertResponseStatus(200);
     }
+
 }
